@@ -1,0 +1,82 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function dono(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    match /E100CAP/{cap} {
+      allow read: if signedIn();
+      allow write: if false;
+      match /MIS/{mis} {
+        allow read: if signedIn();
+        allow write: if false;
+        match /TRA/{locale} {
+          allow read: if signedIn();
+          allow write: if false;
+        }
+      }
+    }
+
+    match /E002CTR/{pais} {
+      allow read: if signedIn();
+      allow write: if false;
+      match /{sub}/{doc} {
+        allow read: if signedIn();
+        allow write: if false;
+      }
+    }
+
+    match /E050CAT/{item} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /E001NOM/{nome} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.ideUsu == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    match /E010USU/{uid} {
+      allow read: if dono(uid);
+      allow create: if dono(uid)
+        && request.resource.data.banUsu == false
+        && request.resource.data.ourUsu == 0;
+      allow update: if dono(uid)
+        && !request.resource.data.diff(resource.data).affectedKeys()
+            .hasAny(['banUsu', 'ourUsu']);
+      allow delete: if false;
+    }
+
+    match /E040AMI/{id} {
+      allow read: if signedIn()
+        && (resource.data.de == request.auth.uid || resource.data.para == request.auth.uid);
+      allow create: if signedIn()
+        && request.resource.data.de == request.auth.uid
+        && request.resource.data.sta == 'P';
+      allow update: if signedIn()
+        && resource.data.para == request.auth.uid
+        && request.resource.data.sta in ['A', 'B'];
+      allow delete: if signedIn()
+        && (resource.data.de == request.auth.uid || resource.data.para == request.auth.uid);
+    }
+
+    match /E030CHT/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.ideUsu == request.auth.uid
+        && request.resource.data.txt is string
+        && request.resource.data.txt.size() < 240;
+      allow update, delete: if false;
+    }
+
+    match /C100PAG/{id} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+  }
+}

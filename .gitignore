@@ -88,3 +88,6 @@ example/macos/Pods/Target Support Files/FlutterMacOS/FlutterMacOS.debug.xcconfig
 example/macos/Pods/Target Support Files/FlutterMacOS/FlutterMacOS.release.xcconfig
 
 .fvm
+node_modules/
+**/serviceAccount*.json
+.metadata.pacote

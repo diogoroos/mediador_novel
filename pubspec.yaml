@@ -1,32 +1,47 @@
-name: bonfire
-description: (RPG maker) Create RPG-style or similar games more simply with Flame.
-version: 4.0.0
-homepage: https://bonfire-engine.github.io
-repository: https://github.com/RafaelBarbosatec/bonfire
-issue_tracker: https://github.com/RafaelBarbosatec/bonfire/issues
-topics:
-  - bonfire
-  - rpg
-  - flame
-  - game-engine
-  - games
+name: novel
+description: RPG bíblico em Flutter, Bonfire e Firebase.
+publish_to: "none"
+version: 0.1.0+1
 
 environment:
-  sdk: ">=3.4.0 <4.0.0"
-  flutter: ">=3.22.0"
+  sdk: ">=3.11.0 <4.0.0"
+  flutter: ^3.41.0
 
 dependencies:
   flutter:
     sdk: flutter
-
-  a_star_algorithm: ^0.4.1
-  http: ^1.6.0
-  flame: ^1.38.2
-  tiledjsonreader: ^1.4.2
-
-dev_dependencies:
-  flame_lint: ^1.2.1
-  flutter_test:
+  flutter_localizations:
     sdk: flutter
 
+  bonfire:
+    path: bonfire
+  cloud_firestore: ^6.7.1
+  cloud_functions: ^6.3.5
+  cupertino_icons: ^1.0.8
+  firebase_auth: ^6.5.6
+  firebase_core: ^4.12.1
+  firebase_storage: ^13.4.5
+  flutter_secure_storage: ^10.0.0
+  get: ^4.7.2
+  google_sign_in: ^6.3.0
+  http: ^1.6.0
+  intl: ^0.20.2
+  path_provider: ^2.1.5
+  sembast: ^3.8.5+1
+  sembast_web: ^2.4.2
+  uuid: ^4.5.1
+  web: ^1.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
 flutter:
+  uses-material-design: true
+  assets:
+    - assets/idi/
+    - assets/conteudo/catalogo.json
+    - assets/images/spr/
+    - assets/images/tile/
+    - assets/images/map/
